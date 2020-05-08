@@ -1,0 +1,348 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>全球疫情可视化及分析</title>
+<script type="text/javascript" src="js/jquery.js"></script>
+<link rel="stylesheet" href="css/comon0.css">
+</head>
+	<script>
+	$(window).load(function(){  
+             $(".loading").fadeOut()
+            })  
+			
+/****/
+$(document).ready(function(){
+	var whei=$(window).width()
+	$("html").css({fontSize:whei/20})
+	$(window).resize(function(){
+		var whei=$(window).width()
+	 $("html").css({fontSize:whei/20})
+});
+	});
+	</script>
+	<script type="text/javascript" src="js/echarts.min.js"></script> 
+	<script language="JavaScript" src="js/js.js"></script> 
+<body>
+<div class="canvas" style="opacity: .2">
+	<iframe frameborder="0" src="js/index.html" style="width: 100%; height: 100%"></iframe>
+	</div>
+<div class="loading">
+  <div class="loadbox"> <img src="picture/loading.gif"> 页面加载中... </div>
+</div>
+<div class="head">
+  <h1>全球疫情可视化及分析系统</h1>
+  <div class="weather"><!--<img src="picture/weather.png"><span>多云转小雨</span>--><span id="showTime"></span></div>
+	
+	<script>
+var t = null;
+    t = setTimeout(time,1000);//開始运行
+    function time()
+    {
+       clearTimeout(t);//清除定时器
+       dt = new Date();
+		var y=dt.getFullYear();
+		var mt=dt.getMonth()+1;
+		var day=dt.getDate();
+       var h=dt.getHours();//获取时
+       var m=dt.getMinutes();//获取分
+       var s=dt.getSeconds();//获取秒
+       document.getElementById("showTime").innerHTML = y+"年"+mt+"月"+day+"-"+h+"时"+m+"分"+s+"秒";
+       t = setTimeout(time,1000); //设定定时器，循环运行     
+    } 
+
+</script>
+	
+	
+</div>
+<div class="mainbox">
+  <ul class="clearfix">
+    <li>
+      <div class="boxall" style="height: 9rem">
+        <div class="alltitle">世界新冠疫情新增变化率</div>
+        <div class="allnav" id="echart1"></div>
+        <div class="boxfoot"></div>
+      </div>
+      <div class="boxall" style="height: 0.1rem">
+        <div class="alltitle"></div>
+        <div class="allnav" id="echart2"></div>
+        <div class="boxfoot"></div>
+      </div>
+      <div class="boxall" style="height: 0.1rem">
+        <div style="height:100%; width: 100%;">
+		  	<div class="sy" id="fb1"></div>
+				<div class="sy" id="fb2"></div>
+				<div class="sy" id="fb3"></div>
+		  </div>
+        <div class="boxfoot">
+			
+		  </div>
+      </div>
+    </li>
+    <li>
+      <div class="bar">
+        <div class="barbox">
+          <ul class="clearfix">
+            <li class="pulll_left counter">2511935</li>
+            <li class="pulll_left counter">672671</li>
+            <li class="pulll_left counter">172762</li>
+          </ul>
+        </div>
+        <div class="barbox2">
+          <ul class="clearfix">
+            <li class="pulll_left">总感染人数</li>
+            <li class="pulll_left">总死亡人数</li>
+            <li class="pulll_left">总治愈人数</li>
+          </ul>
+        </div>
+      </div>
+      <div class="map">
+        <div class="map1"><img src="picture/lbx.png"></div>
+        <div class="map2"><img src="picture/jt.png"></div>
+        <div class="map3"><img src="picture/map.png"></div>
+        <div class="map4" id="map_1"></div>
+      </div>
+    </li>
+    <li>
+          <div class="boxall" style="height:3.4rem">
+        <div class="alltitle">疫情累计人数走势</div>
+            <div>
+              <form>
+              <select name="users" onchange="echarts_4(this.value)" >
+                <option value="600">全球</option>
+                <option value="0">美国</option>
+                <option value="1">西班牙</option>
+                <option value="2">意大利</option>
+                <option value="3">法国</option>
+                <option value="4">德国</option>
+                <option value="5">英国</option>
+                <option value="6">土耳其</option>
+                <option value="7">伊朗</option>
+                <option value="8">俄罗斯</option>
+                <option value="9">比利时</option>
+                <option value="10">巴西</option>
+                <option value="11">加拿大</option>
+                <option value="12">荷兰</option>
+                <option value="13">瑞士</option>
+                <option value="14">葡萄牙</option>
+                <option value="15">印度</option>
+                <option value="16">秘鲁</option>
+                <option value="17">爱尔兰</option>
+                <option value="18">瑞典</option>
+                <option value="19">奥地利</option>
+                <option value="20">以色列</option>
+                <option value="21">沙特阿拉伯</option>
+                <option value="22">日本</option>
+                <option value="23">韩国</option>
+                <option value="24">智利</option>
+                <option value="25">厄瓜多尔</option>
+                <option value="26">波兰</option>
+                <option value="27">巴基斯坦</option>
+                <option value="28">新加坡</option>
+                <option value="29">罗马尼亚</option>
+                <option value="30">墨西哥</option>
+                <option value="31">阿联酋</option>
+                <option value="32">丹麦</option>
+                <option value="33">挪威</option>
+                <option value="34">印度尼西亚</option>
+                <option value="35">捷克</option>
+                <option value="36">澳大利亚</option>
+                <option value="37">塞尔维亚</option>
+                <option value="38">菲律宾</option>
+                <option value="39">卡塔尔</option>
+                <option value="40">白俄罗斯</option>
+                <option value="41">乌克兰</option>
+                <option value="42">马来西亚</option>
+                <option value="43">多米尼加</option>
+                <option value="44">巴拿马</option>
+                <option value="45">芬兰</option>
+                <option value="46">哥伦比亚</option>
+                <option value="47">卢森堡</option>
+                <option value="48">孟加拉国</option>
+                <option value="49">埃及</option>
+                <option value="50">南非</option>
+                <option value="51">摩洛哥</option>
+                <option value="52">阿根廷</option>
+                <option value="53">泰国</option>
+                <option value="54">阿尔及利亚</option>
+                <option value="55">摩尔多瓦</option>
+                <option value="56">希腊</option>
+                <option value="57">匈牙利</option>
+                <option value="58">科威特</option>
+                <option value="59">哈萨克斯坦</option>
+                <option value="60">巴林</option>
+                <option value="61">克罗地亚</option>
+                <option value="62">冰岛</option>
+                <option value="63">乌兹别克斯坦</option>
+                <option value="64">伊拉克</option>
+                <option value="65">爱沙尼亚</option>
+                <option value="66">阿曼</option>
+                <option value="67">阿塞拜疆</option>
+                <option value="68">新西兰</option>
+                <option value="69">亚美尼亚</option>
+                <option value="70">立陶宛</option>
+                <option value="71">斯洛文尼亚</option>
+                <option value="72">波黑</option>
+                <option value="73">波多黎各</option>
+                <option value="74">北马其顿</option>
+                <option value="75">斯洛伐克</option>
+                <option value="76">喀麦隆</option>
+                <option value="77">阿富汗</option>
+                <option value="78">古巴</option>
+                <option value="79">加纳</option>
+                <option value="80">保加利亚</option>
+                <option value="81">突尼斯</option>
+                <option value="82">科特迪瓦</option>
+                <option value="83">吉布提</option>
+                <option value="84">塞浦路斯</option>
+                <option value="85">拉脱维亚</option>
+                <option value="86">安道尔</option>
+                <option value="87">黎巴嫩</option>
+                <option value="88">尼日利亚</option>
+                <option value="89">哥斯达黎加</option>
+                <option value="90">尼日尔</option>
+                <option value="91">几内亚</option>
+                <option value="92">阿尔巴尼亚</option>
+                <option value="93">玻利维亚</option>
+                <option value="94">吉尔吉斯斯坦</option>
+                <option value="95">布基纳法索</option>
+                <option value="96">乌拉圭</option>
+                <option value="97">洪都拉斯</option>
+                <option value="98">圣马力诺</option>
+                <option value="99">巴勒斯坦</option>
+                <option value="100">马耳他</option>
+                <option value="101">约旦</option>
+                <option value="102">塞内加尔</option>
+                <option value="103">格鲁吉亚</option>
+                <option value="104">留尼汪</option>
+                <option value="105">刚果（金）</option>
+                <option value="106">毛里求斯</option>
+                <option value="107">黑山</option>
+                <option value="108">斯里兰卡</option>
+                <option value="109">英国属地曼岛</option>
+                <option value="110">危地马拉</option>
+                <option value="111">委内瑞拉</option>
+                <option value="112">马约特</option>
+                <option value="113">肯尼亚</option>
+                <option value="114">越南</option>
+                <option value="115">马里</option>
+                <option value="116">坦桑尼亚</option>
+                <option value="117">泽西岛</option>
+                <option value="118">索马里</option>
+                <option value="119">萨尔瓦多</option>
+                <option value="120">牙买加</option>
+                <option value="121">格恩西岛</option>
+                <option value="122">巴拉圭</option>
+                <option value="123">法罗群岛</option>
+                <option value="124">马提尼克</option>
+                <option value="125">刚果（布）</option>
+                <option value="126">瓜德罗普</option>
+                <option value="127">卢旺达</option>
+                <option value="128">文莱</option>
+                <option value="129">关岛</option>
+                <option value="130">直布罗陀</option>
+                <option value="131">柬埔寨</option>
+                <option value="132">马达加斯加</option>
+                <option value="133">加蓬</option>
+                <option value="134">缅甸</option>
+                <option value="135">特尼达和多巴哥</option>
+                <option value="136">埃塞俄比亚</option>
+                <option value="137">苏丹</option>
+                <option value="138">利比里亚</option>
+                <option value="139">法属圭亚那</option>
+                <option value="140">阿鲁巴</option>
+                <option value="141">摩纳哥</option>
+                <option value="142">百慕大</option>
+                <option value="143">多哥</option>
+                <option value="144">马尔代夫</option>
+                <option value="145">列支敦士登</option>
+                <option value="146">赤道几内亚</option>
+                <option value="147">巴巴多斯</option>
+                <option value="148">赞比亚</option>
+                <option value="149">圣马丁</option>
+                <option value="150">佛得角</option>
+                <option value="151">圭亚那</option>
+                <option value="152">开曼群岛</option>
+                <option value="153">巴哈马</option>
+                <option value="154">乌干达</option>
+                <option value="155">海地</option>
+                <option value="156">法属玻利维亚</option>
+                <option value="157">贝宁</option>
+                <option value="158">美属维尔京群岛</option>
+                <option value="159">利比亚</option>
+                <option value="160">几内亚比绍</option>
+                <option value="161">塞拉利昂</option>
+                <option value="162">厄立特里亚</option>
+                <option value="163">叙利亚</option>
+                <option value="164">莫桑比克</option>
+                <option value="165">蒙古</option>
+                <option value="166">乍得</option>
+                <option value="167">尼泊尔</option>
+                <option value="168">津巴布韦</option>
+                <option value="169">斯威士兰</option>
+                <option value="170">安提瓜和巴布达</option>
+                <option value="171">东帝汶</option>
+                <option value="172">博茨瓦纳</option>
+                <option value="173">安哥拉</option>
+                <option value="174">老挝</option>
+                <option value="175">斐济</option>
+                <option value="176">伯利兹</option>
+                <option value="177">新喀里多利亚</option>
+                <option value="178">马拉维</option>
+                <option value="179">纳米比亚</option>
+                <option value="180">多米尼克</option>
+                <option value="181">圣卢西亚</option>
+                <option value="182">圣基茨和尼维斯</option>
+                <option value="183">荷属安的列斯</option>
+                <option value="184">格拉纳达</option>
+                <option value="185">北马里亚纳</option>
+                <option value="186">圣文森特和格林纳丁斯</option>
+                <option value="187">中非</option>
+                <option value="188">塞舌尔</option>
+                <option value="189">格陵兰</option>
+                <option value="190">蒙特塞拉特</option>
+                <option value="191">特克斯和凯科斯群岛</option>
+                <option value="192">福克兰群岛（马尔维纳斯）</option>
+                <option value="193">苏里南</option>
+                <option value="194">冈比亚</option>
+                <option value="195">尼加拉瓜</option>
+                <option value="196">梵蒂冈</option>
+                <option value="197">毛利塔尼亚</option>
+                <option value="198">巴布亚新几内亚</option>
+                <option value="199">不丹</option>
+                <option value="200">圣巴泰勒米</option>
+                <option value="201">英属维尔京群岛</option>
+                <option value="202">布隆迪</option>
+                <option value="203">圣多美和普林西比</option>
+                <option value="204">南苏丹</option>
+                <option value="205">安圭拉</option>
+                <option value="206">圣皮埃尔和密克隆</option>
+                <option value="207">也门</option>
+                <option value="208">中国</option>
+                </select>
+              </form>
+            </div>
+        <div class="allnav" id="echart4">
+        </div>
+        <div class="boxfoot"></div>
+      </div>
+      <div class="boxall" style="height: 3.2rem">
+        <div class="alltitle">各国感染人数比例变化（半径随日期而减小）</div>
+        <div class="allnav" id="echart5"></div>
+        <div class="boxfoot"></div>
+      </div>
+      <div class="boxall" style="height: 3rem">
+        <div class="alltitle">"抗疫"主题图谱</div>
+        <div class="allnav" id="echart6"></div>
+        <div class="boxfoot"></div>
+      </div>
+    </li>
+  </ul>
+</div>
+<div class="back"></div>
+
+
+<script type="text/javascript" src="js/world.js"></script>
+<script type="text/javascript" src="js/area_echarts.js"></script> 
+</body>
+</html>
