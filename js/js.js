@@ -20,7 +20,7 @@ function echarts_1() {
     var death=0;
 
     $.ajax({
-            type: "post",
+            // type: "post",
             async: true,
             url: './data/chinese.json',
             data: {},
@@ -486,7 +486,7 @@ function echarts_2() {
 
 
         $.ajax({
-            type: "post",
+            // type: "post",
             async: true,
             url: './data/chinese.json',
             data: {},
@@ -602,7 +602,7 @@ function echarts_2() {
         var worldall3=[];
         mycolor=['#ff0a0a','#1225f5','#1cf50c']
         $.ajax({
-            type: "post",
+            // type: "post",
             async: true,
             url: 'data/chinese.json',
             data: {},
