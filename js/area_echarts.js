@@ -407,7 +407,7 @@ option= {
     var datMap_series_2=[];
     var datMap_series_3=[];
     $.ajax({
-                type: "post",
+                // type: "post",
                 async: true,
                 url: 'data/world_data_highecharts.json',
                 data: {},
