@@ -22,7 +22,7 @@ function echarts_1() {
     $.ajax({
             type: "post",
             async: true,
-            url: './data/chinese.json',
+            url: '../data/chinese.json',
             data: {},
             dataType: "json",
             success: function (result) {
